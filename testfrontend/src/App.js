@@ -196,9 +196,9 @@ function App() {
                   parseInt(selectNumber) === el?.id && (
                     <div
                       key={idx}
-                      className="w-full flex flex-col items-center justify-center"
+                      className="w-full flex flex-col items-center justify-center "
                     >
-                      <div className="w-full flex justify-center items-center gap-2 p-2">
+                      <div className="w-full flex justify-center items-center gap-2 mt-5">
                         <div className="w-[26px] h-[26px] rounded-full bg-[#646F9B] flex justify-center items-center">
                           <p className="font-bold text-[#E2EFFF]">{el?.id}</p>
                         </div>
@@ -210,7 +210,7 @@ function App() {
                         </div>
                       </div>
 
-                      <div className="w-full p-2 flex justify-center items-center h-[70px]">
+                      <div className="w-full flex justify-center items-center h-[70px]">
                         <p className="text-[#646F9B]">{el?.description}</p>
                       </div>
                     </div>
@@ -220,11 +220,11 @@ function App() {
               <div className="w-full flex justify-center items-center gap-2 p-2">
                 {data?.map((el, idx) => (
                   <button
-                    className={`w-[30px] h-[30px] rounded-full
+                    className={` rounded-full
                     ${
                       selectNumber === el?.id
-                        ? "bg-[#646F9B] w-[40px] h-[20px]"
-                        : "bg-[#E2EFFF]"
+                        ? "bg-[#646F9B] w-[20px] h-[10px]"
+                        : "bg-[#E2EFFF] w-[20px] h-[20px]"
                     }
                     `}
                     key={idx}
