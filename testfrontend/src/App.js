@@ -16,11 +16,10 @@ function App() {
   ]);
   // console.log("addContinuousSelection:", addContinuousSelection);
 
-  const contentData = [
+  const data = [
     {
       id: 1,
       title: "สร้างบัญชี / เข้าสู่ระบบ",
-      headser: "สร้างบัญชี / เข้าสู่ระบบ",
       description:
         "กดสร้างบัญชีผู้ใช้งาน หรือเข้าสู่ระบบด้วยเบอร์โทรศัพท์และ Password",
       image: images1,
@@ -28,7 +27,6 @@ function App() {
     {
       id: 2,
       title: "เลือกบริการ",
-      headser: "เลือกบริการ",
       description:
         "เลือกแพ็กเกจตามที่ต้องการ ใส่รายละเอียดให้ครบถ้วนแล้วคลิกปุ่มต่อไปเพื่อไปหน้าชำระเงิน",
       image: images2,
@@ -37,7 +35,6 @@ function App() {
     {
       id: 3,
       title: "ชำระเงิน",
-      headser: "ชำระเงิน",
       description:
         "สแกน QR code จากเว็บไซต์เมื่อชำระเสร็จเรียบร้อย คลิกปุ่มแจ้งโอน",
       image: images3,
@@ -46,13 +43,12 @@ function App() {
     {
       id: 4,
       title: "ระบบดำเนินการ",
-      headser: "ระบบดำเนินการ",
       description:
         "ระบบจะเริ่มดำเนินการทันทีผลเห็นลัพธ์ไวยอดเพิ่มแบบ เสถียรและมั่งคง",
       image: images4,
     },
   ];
-  // console.log("contentData:", contentData);
+  // console.log("data:", data);
 
   useEffect(() => {
     AOS.init({ duration: 500 });
@@ -98,17 +94,17 @@ function App() {
           </div>
 
           {/* BOX-BOTTOM */}
-          <div className="w-full flex mt-6">
+          <div className="w-full flex flex-wrap mt-6">
             {/* ROW-IMAGES */}
-            <div className="w-[50%] flex justify-center ">
-              {contentData
+            <div className="lg:w-[50%] w-full flex justify-center">
+              {data
                 .filter(el => el.id === parseInt(selectNumber))
                 .map((el, idx) => (
                   <div key={idx}>
                     <img
                       key={el.id}
                       src={el?.image}
-                      className="w-[380px] h-[380px]"
+                      className="lg:w-[380px] lg:h-[380px]  w-[380px]"
                       data-aos="fade-up"
                       data-aos-duration="500"
                     />
@@ -117,10 +113,11 @@ function App() {
             </div>
 
             {/* ROW-SELECT */}
-            <div className="w-[50%] flex flex-col gap-10 ">
-              {contentData?.map((el, idx) => (
+            <div className="lg:w-[50%] lg:flex w-full flex flex-col lg:gap-10 hidden ">
+              {data?.map((el, idx) => (
                 <div className=" flex gap-2 items-center mt-2">
                   {/* NUMBER */}
+
                   <button
                     onClick={() => {
                       setSelectNuber(el?.id);
@@ -128,19 +125,21 @@ function App() {
                     }}
                   >
                     <div
-                      className={`relative w-[46px] h-[46px] rounded-full bg-${
-                        addContinuousSelection.some(item => item.id === el?.id)
-                          ? "[#646F9B]"
-                          : "gray-200"
+                      className={`relative w-[46px] h-[46px] rounded-full ${
+                        addContinuousSelection?.some(
+                          item => item?.id === el?.id
+                        )
+                          ? "bg-[#646F9B]"
+                          : "bg-[#E2EFFF]"
                       } flex items-center justify-center z-50`}
                     >
                       <h1
-                        className={`text-xl text-${
+                        className={`text-xl ${
                           addContinuousSelection.some(
-                            item => item.id === el?.id
+                            item => item?.id === el?.id
                           )
-                            ? "[#E2EFFF]"
-                            : "[#556089]"
+                            ? "text-[#E2EFFF]"
+                            : "text-[#556089]"
                         }`}
                       >
                         {el?.id}
@@ -157,8 +156,8 @@ function App() {
                             <div className="h-4 w-full text-sm bg-[#646F9B] rotate-45 transform origin-bottom-right rounded-sm"></div>
                           </div>
 
-                          <div className="w-full text-sm bg-[#646F9B] rounded-lg text-white p-4 my-6 rounded-lg flex-1">
-                            <p className="font-bold"> {el?.headser}</p>
+                          <div className="w-full text-sm bg-[#646F9B] rounded-lg text-white p-4 my-6 flex-1">
+                            <p className="font-bold">{el?.title}</p>
                             <p> {el?.description}</p>
                           </div>
                         </div>
@@ -173,7 +172,69 @@ function App() {
               ))}
 
               <span className="absolute h-[300px] top- border border-l border-[#E2EFFF] dark:border-gray-700 ml-6 mt-2 z-10"></span>
-              <span className="absolute h-[70px] top- border border-l border-[#646F9B] dark:border-gray-700 ml-6 mt-2 z-20"></span>
+              <span
+                style={{
+                  height: `${
+                    addContinuousSelection.length === 1
+                      ? 70
+                      : addContinuousSelection[
+                          addContinuousSelection.length - 1
+                        ].id === 4
+                      ? 10 + (addContinuousSelection.length - 1) * 100
+                      : 60 + (addContinuousSelection.length - 1) * 100
+                  }px`,
+                }}
+                className="absolute top- border border-l border-[#646F9B]
+                dark:border-gray-700 ml-6 mt-2 z-20"
+              ></span>
+            </div>
+
+            {/* After Hidden  */}
+            <div className="lg:hidden w-full flex flex-col justify-center items-center">
+              {data?.map(
+                (el, idx) =>
+                  parseInt(selectNumber) === el?.id && (
+                    <div
+                      key={idx}
+                      className="w-full flex flex-col items-center justify-center"
+                    >
+                      <div className="w-full flex justify-center items-center gap-2 p-2">
+                        <div className="w-[26px] h-[26px] rounded-full bg-[#646F9B] flex justify-center items-center">
+                          <p className="font-bold text-[#E2EFFF]">{el?.id}</p>
+                        </div>
+
+                        <div>
+                          <p className="font-bold text-[#646F9B] text-base">
+                            {el?.title}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="w-full p-2 flex justify-center items-center h-[70px]">
+                        <p className="text-[#646F9B]">{el?.description}</p>
+                      </div>
+                    </div>
+                  )
+              )}
+
+              <div className="w-full flex justify-center items-center gap-2 p-2">
+                {data?.map((el, idx) => (
+                  <button
+                    className={`w-[30px] h-[30px] rounded-full
+                    ${
+                      selectNumber === el?.id
+                        ? "bg-[#646F9B] w-[40px] h-[20px]"
+                        : "bg-[#E2EFFF]"
+                    }
+                    `}
+                    key={idx}
+                    onClick={() => {
+                      setSelectNuber(el?.id);
+                      continuousSelection(el?.id);
+                    }}
+                  ></button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
